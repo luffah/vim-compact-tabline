@@ -1,0 +1,135 @@
+*compact_tabline.vim*    to have all tabs visibles
+                                                             *compact_tabline*
+License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
+Author(s):   luffah (luffah AT runbox com)
+Revision:    1
+Last Change: 2026-06-30
+==============================================================================
+CONTENTS                                            *compact_tabline-contents*
+
+1. Functions                                       |compact_tabline-functions|
+2. Globals                                           |compact_tabline-globals|
+
+==============================================================================
+FUNCTIONS                                          *compact_tabline-functions*
+
+compact_tabline#format(fstring, name, color, tab, curtab, buf, curbuf)
+                                                    *compact_tabline#format()*
+    Function that replace special words with their value:
+    - <name>       : short file name
+    - <color>      : highlight color (take no space)
+    - <1stline>    : first line of the buffer
+    - <tabnr>      : tab number in superscript style
+    - <cur_tabnr>  : active tab number in superscript style
+    - <bufnr>      : buf number in subscript style
+    - <cur_bufnr>  : active buf number in subscript style
+
+
+==============================================================================
+GLOBALS                                              *compact_tabline-globals*
+
+*g:compact_tabline_name_substs*
+    List of [from, to] substitutions used to shorten tab name
+    Default contains generic technical english terms.
+
+*g:compact_tabline_hi_tab*
+    Default highlight used to color an inactive tab (<color>). See |hi|
+    Default: 'TabLine'
+
+*g:compact_tabline_hi_current_tab*
+    Highlight used to color an active tab (<color>). See |hi|
+    Default: 'TabLineSel'
+    If you need a custom render for this define a new hi TablineSelCustom, 
+    and don't forget to replace TabLineSel to TablineSelCustom in |g:compact_tabline_current_tab_format|
+
+*g:compact_tabline_hi_ft_prefix*
+    Highlight prefix to use for coloring an inactive tab with determined filetype (<color>).
+    Default: 'TabLineFT'
+    Example: TabLineFT  +  python  -> highlight TablineFTpython is used if exists
+    Note: use :let b:tabline_hi to use a specific color
+    See |hi|
+
+*g:compact_tabline_double_of_current_right_arrow*
+    When double tabs (same buffer) is detected the arrow to use to target a tab after current.
+    Default: '⏵'
+
+*g:compact_tabline_double_of_current_left* arrow
+    When double tabs (same buffer) is detected the arrow to use to target a tab before current.
+    Default: '⏴'
+
+*g:compact_tabline_tab_buffer_sep*
+    Separator to use between multiple buffer names in one tab 
+    Default: '¦'
+
+*g:compact_tabline_empty_buffer_name*
+    Name to use for an undefined buffer name.
+    Default: '<bufnr><1stline>'
+    See |compact_tabline#format|
+
+*g:compact_tabline_line_start*
+    Define how starts the tabline.
+    In order to optimize space, you have to define this with |g:compact_tabline_line_start_deco_width|
+    Default: '%#TabLineFill#'
+    See |compact_tabline#format|
+
+*g:compact_tabline_line_start_deco_width*
+    Tell the real visible width a the start part
+    Default: 0
+
+*g:compact_tabline_line_start_addons*
+    A list of [<space_to_reserve>, lambda function] to add extra content at the start of line
+
+*g:compact_tabline_line_end*
+    Define how ends the tabline.
+    In order to optimize space, you have to define this with |g:compact_tabline_line_end_deco_width|
+    Default: '%#TabLineFill#%<%='
+
+*g:compact_tabline_line_end_deco_width*
+    Default: 0
+
+*g:compact_tabline_line_end_addons*
+    A list of [<space_to_reserve>, lambda function] to add extra content at the end of line
+
+*g:compact_tabline_tab_format*
+    Template for an inactive tab
+    In order to optimize space, you have to define this with |g:compact_tabline_tab_deco_width|
+    Default: '<color><tabnr><name>%#TabLineFill# '
+    See |compact_tabline#format|
+
+*g:compact_tabline_tab_deco_width*
+    An estimation of space used by decorating elements (except name) in inactive tab.
+    Default: 3
+
+*g:compact_tabline_current_tab_format*
+    Template for active tab
+    In order to optimize space, you have to define this with |g:compact_tabline_current_tab_deco_width|
+    Default: '%#TabLineSel# <name>▕<color>▒%#TabLineFill# '
+    See |compact_tabline#format|
+
+*g:compact_tabline_current_tab_deco_width*
+    An estimation of space used by decorating elements (except name) in inactive tab.
+    Default: 4
+
+*g:compact_tabline_used_tab_content_minwidth*
+    Minimum width of the content of an used tab.
+    Default: 2
+    **Used tab** is a tab with b:use=1.
+    This is automatically set when : you open or save the file or insert content.
+    This state variable can be restored if you add '!' in shada. |shada-!|
+
+*g:compact_tabline_used_tab_content_maxwidth*
+    Maximum width of the content of an used tab.
+    See |Used tab|.
+    Default: 24
+
+*g:compact_tabline_unused_tab_content_width*
+    Minimum width of the content of an unused tab.
+    See |Used tab|.
+    Default: 1
+
+*g:compact_tabline_unused_tab_content_maxwidth*
+    Maximum width of the content of an unused tab.
+    See |Used tab|.
+    Default: 2
+
+vim:tw=78:ts=8:ft=help:norl:
